@@ -16,7 +16,8 @@ source:
   sha256: fe04e11cd1ede2896d952976943c2f164be4260abde8845285663c1aa944f6bc
 
 build:
-  number: 0
+  merge_build_host: True  # [win]
+  number: 1
   skip: true  # [win32]
 
   rpaths:
@@ -25,18 +26,20 @@ build:
 
 requirements:
   build:
+    - posix                # [win]
+    - {{ compiler('c') }}        # [unix]
+    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ compiler('cxx') }}        # [unix]
+    - {{ compiler('m2w64_cxx') }}  # [win]
+  host:
     - r-base
     - r-ics
     - r-mvtnorm
-    - posix                # [win]
-    - {{native}}toolchain  # [win]
-    - gcc                  # [not win]
 
   run:
     - r-base
     - r-ics
     - r-mvtnorm
-    - libgcc  # [not win]
 
 test:
   commands:
@@ -50,7 +53,7 @@ about:
     spatial median and spatial signs computation, Hotelling's T-test, estimates of shape
     are implemented.
   license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}\/lib\/R\/share\/licenses\/GPL-3'  # [unix]
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'  # [unix]
   license_file: '{{ environ["PREFIX"] }}\R\share\licenses\GPL-3'  # [win]
 extra:
    recipe-maintainers:
