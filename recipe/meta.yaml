@@ -1,5 +1,4 @@
-{% set version = '1.1-0' %}
-
+{% set version = '1.1-1' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -8,42 +7,42 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: ICSNP_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/ICSNP_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/ICSNP/ICSNP_{{ version }}.tar.gz
-
-  sha256: fe04e11cd1ede2896d952976943c2f164be4260abde8845285663c1aa944f6bc
+    - {{ cran_mirror }}/src/contrib/ICSNP_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/ICSNP/ICSNP_{{ version }}.tar.gz
+  sha256: cd9d70977c448e46dd37b718e9127859cb7d081579f81897c652d6c66798c0fd
 
 build:
   merge_build_host: True  # [win]
-  number: 1002
-  skip: true  # [win32]
-
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - posix                # [win]
-    - {{ compiler('c') }}        # [unix]
-    - {{ compiler('m2w64_c') }}  # [win]
-    - {{ compiler('cxx') }}        # [unix]
-    - {{ compiler('m2w64_cxx') }}  # [win]
+    - {{ compiler('c') }}              # [not win]
+    - {{ compiler('m2w64_c') }}        # [win]
+    - {{ compiler('cxx') }}            # [not win]
+    - {{ compiler('m2w64_cxx') }}      # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}make
+    - {{posix}}sed               # [win]
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
   host:
     - r-base
     - r-ics
     - r-mvtnorm
-
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
     - r-ics
     - r-mvtnorm
 
 test:
   commands:
-    - $R -e "library('ICSNP')"  # [not win]
+    - $R -e "library('ICSNP')"           # [not win]
     - "\"%R%\" -e \"library('ICSNP')\""  # [win]
 
 about:
@@ -53,14 +52,27 @@ about:
     spatial median and spatial signs computation, Hotelling's T-test, estimates of shape
     are implemented.
   license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
+
 extra:
-   recipe-maintainers:
-    - dpryan79
+  recipe-maintainers:
+    - conda-forge/r
     - MathiasHaudgaard
     - FrodePedersen
     - ArneKr
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
+
+# Package: ICSNP
+# Type: Package
+# Title: Tools for Multivariate Nonparametrics
+# Version: 1.1-1
+# Date: 2018-03-10
+# Author: Klaus Nordhausen, Seija Sirkia, Hannu Oja, David E. Tyler
+# Maintainer: Klaus Nordhausen <klaus.nordhausen@tuwien.ac.at>
+# Depends: R (>= 2.4.0), mvtnorm, ICS
+# Description: Tools for multivariate nonparametrics, as location tests based on marginal ranks, spatial median and spatial signs computation, Hotelling's T-test, estimates of shape are implemented.
+# License: GPL (>= 2)
+# Encoding: latin1
+# NeedsCompilation: yes
+# Packaged: 2018-03-10 22:25:09 UTC; klanor
+# Repository: CRAN
+# Date/Publication: 2018-03-10 23:03:38 UTC
