@@ -3,6 +3,7 @@ About r-icsnp-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-icsnp-feedstock/blob/main/LICENSE.txt)
 
+
 About r-icsnp
 -------------
 
@@ -11,6 +12,7 @@ Home: https://CRAN.R-project.org/package=ICSNP
 Package license: GPL (>= 2)
 
 Summary: Tools for multivariate nonparametrics, as location tests based on marginal ranks, spatial median and spatial signs computation, Hotelling's T-test, estimates of shape are implemented.
+
 About r-icsnp
 -------------
 
