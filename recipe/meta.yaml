@@ -1,6 +1,5 @@
 {% set version = "1.1-2" %}
 {% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-icsnp
@@ -13,8 +12,7 @@ source:
   sha256: 7a4b11d9bd74099fd31f802e438605ab5d181a47754018e5eb6deeebec6ad6c3
 
 build:
-  merge_build_host: true  # [win]
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
@@ -22,7 +20,9 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}              # [not win]
+    - {{ stdlib("c") }}                # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
+    - {{ stdlib("m2w64_c") }}          # [win]
     - {{ compiler('cxx') }}            # [not win]
     - {{ compiler('m2w64_cxx') }}      # [win]
     - {{ posix }}filesystem        # [win]
@@ -36,7 +36,6 @@ requirements:
     - r-mvtnorm
   run:
     - r-base
-    - {{ native }}gcc-libs         # [win]
     - r-ics
     - r-mvtnorm
 
