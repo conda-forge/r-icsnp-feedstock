@@ -9,7 +9,7 @@ About r-icsnp
 
 Home: https://CRAN.R-project.org/package=ICSNP
 
-Package license: GPL (>= 2)
+Package license: GPL-2.0-or-later
 
 Summary: Tools for multivariate nonparametrics, as location tests based on marginal ranks, spatial median and spatial signs computation, Hotelling's T-test, estimates of shape are implemented.
 
@@ -18,7 +18,7 @@ About r-icsnp
 
 Home: https://CRAN.R-project.org/package=ICSNP
 
-Package license: GPL (>= 2)
+Package license: GPL-2.0-or-later
 
 Summary: Tools for multivariate nonparametrics, as location tests based on marginal ranks, spatial median and spatial signs computation, Hotelling's T-test, estimates of shape are implemented.
 
