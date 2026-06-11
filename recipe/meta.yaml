@@ -1,21 +1,25 @@
-{% set version = "1.1-2" %}
+{% set version = "1.1-3" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
   name: r-icsnp
-  version: {{ version|replace("-", "_") }}
+  version: "{{ version|replace("-", "_") }}"
 
 source:
   url:
     - {{ cran_mirror }}/src/contrib/ICSNP_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/ICSNP/ICSNP_{{ version }}.tar.gz
-  sha256: 7a4b11d9bd74099fd31f802e438605ab5d181a47754018e5eb6deeebec6ad6c3
+  sha256: eec281ef7a4be767d274ed4022e74beb71d159276851a12834bb921b25fcd42c
 
 build:
-  number: 2
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
+  missing_dso_whitelist:
+    - '*/R.dll'        # [win]
+    - '*/Rblas.dll'    # [win]
+    - '*/Rlapack.dll'  # [win]
 
 requirements:
   build:
@@ -46,10 +50,11 @@ test:
 
 about:
   home: https://CRAN.R-project.org/package=ICSNP
-  license: GPL (>= 2)
+  license: GPL-2.0-or-later
   summary: Tools for multivariate nonparametrics, as location tests based on marginal ranks, spatial median and spatial signs computation, Hotelling's T-test, estimates of shape are implemented.
   license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
+  license_file:
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
